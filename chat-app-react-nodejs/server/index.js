@@ -25,6 +25,9 @@ mongoose
 app.get("/ping", (_req, res) => {
   return res.json({ msg: "Ping Successful" });
 });
+app.get('/', (req, res) => {
+  res.send('Welcome to the chat app backend API!');
+});
 
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
@@ -34,7 +37,7 @@ const server = app.listen(process.env.PORT, () =>
 );
 const io = socket(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "http://192.168.29.33:3000", 
     credentials: true,
   },
 });
