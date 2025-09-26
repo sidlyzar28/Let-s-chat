@@ -8,8 +8,19 @@ const socket = require("socket.io");
 require("dotenv").config();
 
 app.use(cors());
+
+const allowedOrigin = process.env.CORS_ORIGIN || "http://localhost:3000";
+
+app.use(
+  cors({
+    origin: allowedOrigin, 
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true,
+  })
+);
 app.use(express.json());
 
+mongoose.set('strictQuery', true);
 mongoose
   .connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
@@ -35,9 +46,10 @@ app.use("/api/messages", messageRoutes);
 const server = app.listen(process.env.PORT, () =>
   console.log(`Server started on ${process.env.PORT}`)
 );
+
 const io = socket(server, {
   cors: {
-    origin: "http://192.168.29.33:3000", 
+    origin: allowedOrigin, // Use the same allowed origin for WebSockets
     credentials: true,
   },
 });

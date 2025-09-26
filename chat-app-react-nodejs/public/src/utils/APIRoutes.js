@@ -1,4 +1,4 @@
-const host = "http://192.168.29.33:5000";
+export const host = process.env.REACT_APP_API_URL; 
 
 export const loginRoute = `${host}/api/auth/login`;
 export const registerRoute = `${host}/api/auth/register`;
